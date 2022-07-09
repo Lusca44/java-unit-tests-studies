@@ -69,65 +69,6 @@ public class LocacaoServiceTest {
 		erro.expectMessage("Filme nao pode ser nullo.");
 		service.alugarFilme(usuario, null);
 	}
-
-	@Test
-	public void teste25PorcentoDesconto() throws BusinessException {
-		Usuario usuario = new Usuario("Usuario 1");
-		List<Filme> filmes = new ArrayList();
-		filmes.add(new Filme("Fime 1", 1, 4.0));
-		filmes.add(new Filme("Fime 2", 1, 4.0));
-		filmes.add(new Filme("Fime 3", 1, 4.0));
-		
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		assertEquals(locacao.getValor(), 11.0, 0.01);
-	}
-
-	@Test
-	public void teste50PorcentoDesconto() throws BusinessException {
-		Usuario usuario = new Usuario("Usuario 1");
-		List<Filme> filmes = new ArrayList();
-		filmes.add(new Filme("Fime 1", 1, 4.0));
-		filmes.add(new Filme("Fime 2", 1, 4.0));
-		filmes.add(new Filme("Fime 3", 1, 4.0));
-		filmes.add(new Filme("Fime 4", 1, 4.0));
-		
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		assertEquals(locacao.getValor(), 13.0, 0.01);
-	}
-
-	@Test
-	public void teste75PorcentoDesconto() throws BusinessException {
-		Usuario usuario = new Usuario("Usuario 1");
-		List<Filme> filmes = new ArrayList();
-		filmes.add(new Filme("Fime 1", 1, 4.0));
-		filmes.add(new Filme("Fime 2", 1, 4.0));
-		filmes.add(new Filme("Fime 3", 1, 4.0));
-		filmes.add(new Filme("Fime 4", 1, 4.0));
-		filmes.add(new Filme("Fime 5", 1, 4.0));
-		
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		assertEquals(locacao.getValor(), 14.0, 0.01);
-	}
-
-	@Test
-	@Ignore
-	public void teste100PorcentoDesconto() throws BusinessException {
-		Usuario usuario = new Usuario("Usuario 1");
-		List<Filme> filmes = new ArrayList();
-		filmes.add(new Filme("Fime 1", 1, 4.0));
-		filmes.add(new Filme("Fime 2", 1, 4.0));
-		filmes.add(new Filme("Fime 3", 1, 4.0));
-		filmes.add(new Filme("Fime 4", 1, 4.0));
-		filmes.add(new Filme("Fime 5", 1, 4.0));
-		filmes.add(new Filme("Fime 6", 1, 4.0));
-		
-		Locacao locacao = service.alugarFilme(usuario, filmes);
-		
-		assertEquals(locacao.getValor(), 14.0, 0.01);
-	}
 	
 	@Test
 	public void locacaoNoSabado() throws BusinessException {
