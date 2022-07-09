@@ -57,9 +57,6 @@ public class CalculadoraTDDTest {
 			int result = calc.dividir(a, b);
 		} catch (BusinessException e) {
 			assertEquals(e.getMessage(), "Não é possivel dividir por zero.");
-
 		}
-		
-		
 	}
 }
