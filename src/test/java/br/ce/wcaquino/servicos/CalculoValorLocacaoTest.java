@@ -14,6 +14,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
+import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -38,13 +39,13 @@ public class CalculoValorLocacaoTest {
 		service = new LocacaoService();
 	}
 
-	private static Filme filme1= new Filme("Filme 1", 1, 4.0);
-	private static Filme filme2= new Filme("Filme 2", 1, 4.0);
-	private static Filme filme3= new Filme("Filme 3", 1, 4.0);
-	private static Filme filme4= new Filme("Filme 4", 1, 4.0);
-	private static Filme filme5= new Filme("Filme 5", 1, 4.0);
-	private static Filme filme6= new Filme("Filme 6", 1, 4.0);
-	private static Filme filme7= new Filme("Filme 7", 1, 4.0);
+	private static Filme filme1 = FilmeBuilder.Filme().getFilmePreco4().getFilme();
+	private static Filme filme2 = FilmeBuilder.Filme().getFilmePreco4().getFilme();
+	private static Filme filme3 = FilmeBuilder.Filme().getFilmePreco4().getFilme();
+	private static Filme filme4 = FilmeBuilder.Filme().getFilmePreco4().getFilme();
+	private static Filme filme5 = FilmeBuilder.Filme().getFilmePreco4().getFilme();
+	private static Filme filme6 = FilmeBuilder.Filme().getFilmePreco4().getFilme();
+	private static Filme filme7 = FilmeBuilder.Filme().getFilmePreco4().getFilme();
 	
 	@Parameters(name ="{2}")
 	public static Collection<Object[]> getParametros() {

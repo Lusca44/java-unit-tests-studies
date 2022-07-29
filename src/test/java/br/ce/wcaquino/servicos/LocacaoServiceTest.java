@@ -18,6 +18,8 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
+import br.ce.wcaquino.builders.FilmeBuilder;
+import br.ce.wcaquino.builders.UsuarioBuilder;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -41,7 +43,7 @@ public class LocacaoServiceTest {
 
 	@Test(expected = BusinessException.class)
 	public void TesteFilmeForaDeEstoque() throws Exception {
-		Usuario usuario = new Usuario("Usuario 1");
+		Usuario usuario = UsuarioBuilder.Usuario().getUsuario();
 		Filme filme = new Filme("Fime 1", 1, 5.0);
 		Filme filme2 = new Filme("Fime 2", 0, 5.0);
 		Filme filme3 = new Filme("Fime 3", 1, 5.0);
@@ -51,7 +53,7 @@ public class LocacaoServiceTest {
 
 	@Test
 	public void testeUsuarioVazio() {
-		Filme filme = new Filme("Fime 1", 1, 5.0);
+		Filme filme = FilmeBuilder.Filme().getFilme();
 
 		try {
 			service.alugarFilme(null, Arrays.asList(filme));
@@ -63,7 +65,7 @@ public class LocacaoServiceTest {
 
 	@Test
 	public void testeFilmeVazio() throws BusinessException {
-		Usuario usuario = new Usuario("Usuario 1");
+		Usuario usuario = UsuarioBuilder.Usuario().getUsuario();
 
 		erro.expect(BusinessException.class);
 		erro.expectMessage("Filme nao pode ser nullo.");
@@ -73,8 +75,8 @@ public class LocacaoServiceTest {
 	@Test
 	public void locacaoNoSabado() throws BusinessException {
 		Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
-		Usuario usuario = new Usuario("usuario 1");
-		List<Filme> filme = Arrays.asList(new Filme("Filme 1", 1, 1.0));
+		Usuario usuario = UsuarioBuilder.Usuario().getUsuario();
+		List<Filme> filme = Arrays.asList(FilmeBuilder.Filme().getFilme());
 		
 		Locacao locacao = service.alugarFilme(usuario, filme);
 		
