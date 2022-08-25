@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import br.ce.wcaquino.daos.LocacaoDao;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -16,6 +17,9 @@ import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoService {
 
+	private LocacaoDao dao;
+	private SPCService spcService;
+	
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filme) throws BusinessException {
 		if (filme == null || filme.isEmpty()) {
 			throw new BusinessException("Filme nao pode ser nullo.");
@@ -56,6 +60,10 @@ public class LocacaoService {
 			}
 			valorTotal += valor;
 		}
+		
+		if(spcService.isNegativado(usuario)) {
+			throw new BusinessException("O usuário esta negativado no SPC.");
+		}
 
 		locacao.setValor(valorTotal);
 
@@ -67,10 +75,17 @@ public class LocacaoService {
 		}
 		locacao.setDataRetorno(dataEntrega);
 
-		// Salvando a locacao...
-		// TODO adicionar método para salvar
+		dao.salvar(locacao);
 
 		return locacao;
+	}
+	
+	public void setLocacaoDao(LocacaoDao dao) {
+		this.dao = dao;
+	}
+
+	public void setSPCService(SPCService spcService) {
+		this.spcService = spcService;
 	}
 
 }

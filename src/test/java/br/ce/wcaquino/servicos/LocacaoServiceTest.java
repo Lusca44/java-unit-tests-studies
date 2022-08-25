@@ -17,9 +17,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.builders.UsuarioBuilder;
+import br.ce.wcaquino.daos.LocacaoDao;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -36,9 +38,16 @@ public class LocacaoServiceTest {
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
 
+	private SPCService spcService;
+	private LocacaoDao dao;
+	
 	@Before
 	public void before() {
 		service = new LocacaoService();
+		dao = Mockito.mock(LocacaoDao.class);
+		service.setLocacaoDao(dao);
+		spcService = Mockito.mock(SPCService.class);
+		service.setSPCService(spcService);
 	}
 
 	@Test(expected = BusinessException.class)
@@ -82,5 +91,19 @@ public class LocacaoServiceTest {
 		
 		boolean isSegunda= DataUtils.verificarDiaSemana(locacao.getDataLocacao(), Calendar.MONDAY);
 		assertFalse(isSegunda);
+	}
+	
+	@Test
+	public void naoDeveAlugarFilmeNegativado() throws BusinessException {
+		Usuario usuario = UsuarioBuilder.Usuario().getUsuario();
+		List<Filme> filme = Arrays.asList(FilmeBuilder.Filme().getFilme());
+		
+		Mockito.when(spcService.isNegativado(usuario)).thenReturn(true);
+		
+		erro.expect(BusinessException.class);
+		erro.expectMessage("O usuário esta negativado no SPC.");
+		
+		service.alugarFilme(usuario, filme);
+
 	}
 }
